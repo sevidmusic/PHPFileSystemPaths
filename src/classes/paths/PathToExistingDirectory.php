@@ -12,11 +12,41 @@ class PathToExistingDirectory implements PathToExistingDirectoryInterface
 {
 
 
+    /**
+     * Instantiate a new PathToExistingDirectory.
+     *
+     * @param SafeTextCollection $safeTextCollection
+     *                               The SafeTextCollection that will
+     *                               be used to construct the path to
+     *                               the existing directory.
+     *
+     *                               Note: If the specified
+     *                               SafeTextCollection does
+     *                               not map to a existing
+     *                               directory then the
+     *                               path returned by the
+     *                               __toString() method will
+     *                               be the path to the systems
+     *                               temporary directory.
+     *
+     *                               The temporary directory
+     *                               path will be determined
+     *                               via php's sys_get_temp_dir()
+     *                               function.
+     *
+     * @see [sys_get_temp_dir()](https://www.php.net/manual/en/function.sys-get-temp-dir.php)
+     *
+     */
     public function __construct(
         private SafeTextCollection $safeTextCollection
     ) {
-        if(!$this->safeTextCollectionMapsToAnExistingPath($this->safeTextCollection)) {
-            $this->safeTextCollection = $this->safeTextCollectionForPathToTmpDirectory();
+        if(
+            !$this->safeTextCollectionMapsToAnExistingPath(
+                $this->safeTextCollection
+            )
+        ) {
+            $this->safeTextCollection =
+                $this->safeTextCollectionForPathToTmpDirectory();
         }
     }
 
@@ -63,12 +93,12 @@ class PathToExistingDirectory implements PathToExistingDirectoryInterface
         );
     }
 
-
     public function __toString(): string
     {
         return $this->derivePathFromSafeTextCollection(
             $this->safeTextCollection()
         );
     }
+
 }
 
