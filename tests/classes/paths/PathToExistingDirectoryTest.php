@@ -5,10 +5,10 @@ namespace Darling\PHPFileSystemPaths\tests\classes\paths;
 use \Darling\PHPFileSystemPaths\classes\paths\PathToExistingDirectory;
 use \Darling\PHPFileSystemPaths\tests\PHPFileSystemPathsTest;
 use \Darling\PHPFileSystemPaths\tests\interfaces\paths\PathToExistingDirectoryTestTrait;
+use \Darling\PHPTextTypes\classes\collections\SafeTextCollection;
+use \Darling\PHPTextTypes\classes\strings\Name;
 use \Darling\PHPTextTypes\classes\strings\SafeText;
 use \Darling\PHPTextTypes\classes\strings\Text;
-use \Darling\PHPTextTypes\classes\strings\Name;
-use \Darling\PHPTextTypes\classes\collections\SafeTextCollection;
 
 class PathToExistingDirectoryTest extends PHPFileSystemPathsTest
 {
@@ -26,23 +26,29 @@ class PathToExistingDirectoryTest extends PHPFileSystemPathsTest
 
     public function setUp(): void
     {
-        $safeTextCollectionForPathThatDoesNotExist = new SafeTextCollection(
-            new SafeText(new Name(new Text($this->randomChars()))),
-            new SafeText(new Name(new Text($this->randomChars()))),
-            new SafeText(new Name(new Text($this->randomChars()))),
+        $safeTextCollectionForPathThatDoesNotExist =
+            new SafeTextCollection(
+                new SafeText(new Name(new Text($this->randomChars()))),
+                new SafeText(new Name(new Text($this->randomChars()))),
+                new SafeText(new Name(new Text($this->randomChars()))),
+            );
+        $currentDirectoryPathParts = explode(
+            DIRECTORY_SEPARATOR,
+            __DIR__
         );
-        $currentDirectoryPathParts = explode(DIRECTORY_SEPARATOR, __DIR__);
         $safeTextPartsToExistingDirectoryPath = [];
         foreach($currentDirectoryPathParts as $pathPart) {
             if(!empty($pathPart)) {
-                $safeTextPartsToExistingDirectoryPath[] = new SafeText(
-                    new Name(new Text($pathPart))
-                );
+                $safeTextPartsToExistingDirectoryPath[] =
+                    new SafeText(
+                        new Name(new Text($pathPart))
+                    );
             }
         }
-        $safeTextColletionForPathThatDoesExist = new SafeTextCollection(
-            ...$safeTextPartsToExistingDirectoryPath
-        );
+        $safeTextColletionForPathThatDoesExist =
+            new SafeTextCollection(
+                ...$safeTextPartsToExistingDirectoryPath
+            );
         $testSafeTextCollection = (
             rand(0, 1)
             ? $safeTextCollectionForPathThatDoesNotExist

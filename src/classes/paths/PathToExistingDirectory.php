@@ -51,7 +51,15 @@ class PathToExistingDirectory implements PathToExistingDirectoryInterface
     private function safeTextCollectionForPathToTmpDirectory(): SafeTextCollection
     {
         return new SafeTextCollectionInstance(
-            new SafeText(new Text('tmp'))
+            new SafeText(
+                new Text(
+                    str_replace(
+                        DIRECTORY_SEPARATOR,
+                        '',
+                        sys_get_temp_dir()
+                    )
+                )
+            )
         );
     }
 
