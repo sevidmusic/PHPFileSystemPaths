@@ -21,8 +21,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Darling\\RoadyRoutes\\": "src/",
-            "Darling\\RoadyRoutes\\tests\\": "tests/"
+            "Darling\\PHPFileSystemPaths\\": "src/",
+            "Darling\\PHPFileSystemPaths\\tests\\": "tests/"
         }
     },
     "require-dev": {
