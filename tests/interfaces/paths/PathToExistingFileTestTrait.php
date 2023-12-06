@@ -256,6 +256,27 @@ trait PathToExistingFileTestTrait
         );
     }
 
+    /**
+     * Test name return expected string.
+     *
+     * @return void
+     *
+     * @covers PathToExisitngFile->__toString()
+     *
+     */
+    public function test___toString_returns_the_expected_string(): void
+    {
+        $this->assertEquals(
+            $this->expectedPathToExistingDirectory()->__toString() . DIRECTORY_SEPARATOR . $this->expectedName()->__toString(),
+            $this->pathToExistingFileTestInstance()->__toString(),
+            $this->testFailedMessage(
+                $this->pathToExistingFileTestInstance(),
+                '__toString',
+                'return the expected string.'
+            ),
+        );
+    }
+
     abstract protected function testFailedMessage(object $testedInstance, string $testedMethod, string $expectation): string;
     abstract public static function assertEquals(mixed $expected, mixed $actual, string $message = ''): void;
     abstract public static function assertTrue(mixed $condition, string $message = ''): void;

@@ -18,10 +18,10 @@ class PathToExistingFile implements PathToExistingFileInterface
         private PathToExistingDirectory $pathToExistingDirectory,
         private Name $name
     ) {
-        $this->setPathAndFileName();
+        $this->resetPathAndFileNameIfSpecifiedFileDoesNotExist();
     }
 
-    private function setPathAndFileName(): void
+    private function resetPathAndFileNameIfSpecifiedFileDoesNotExist(): void
     {
         if(!file_exists($this->pathToExistingDirectory() . DIRECTORY_SEPARATOR . $this->name())) {
             $pathToExistingDirectory = new PathToExistingDirectoryInstance(
@@ -66,6 +66,11 @@ class PathToExistingFile implements PathToExistingFileInterface
     public function name(): Name
     {
         return $this->name;
+    }
+
+    public function __toString(): string
+    {
+        return $this->pathToExistingDirectory()->__toString() . DIRECTORY_SEPARATOR . $this->name()->__toString();
     }
 
 }
