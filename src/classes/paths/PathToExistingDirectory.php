@@ -22,7 +22,7 @@ class PathToExistingDirectory implements PathToExistingDirectoryInterface
      *
      *                               Note: If the specified
      *                               SafeTextCollection does
-     *                               not map to a existing
+     *                               not map to an existing
      *                               directory then the
      *                               path returned by the
      *                               __toString() method will
