@@ -133,9 +133,6 @@ trait PathToExistingFileTestTrait
         return $this->expectedPathToExistingDirectory;
     }
 
-
-    ####
-
     /**
      * Set the Name that is expected to be
      * returned by the PathToExistingFile. being tested's
@@ -171,10 +168,6 @@ trait PathToExistingFileTestTrait
         return $this->expectedName;
     }
 
-
-
-    #####
-
     /**
      * Test pathToExistingDirectory return expected PathToExistingDirectory.
      *
@@ -183,7 +176,7 @@ trait PathToExistingFileTestTrait
      * @covers PathToExisitngFile->pathToExistingDirectory()
      *
      */
-    public function test_pathToExistingDirectory_return_expected_PathToExistingDirectory(): void
+    public function test_pathToExistingDirectory_returns_expected_PathToExistingDirectory(): void
     {
         $this->assertEquals(
             $this->expectedPathToExistingDirectory(),
@@ -204,7 +197,7 @@ trait PathToExistingFileTestTrait
      * @covers PathToExisitngFile->name()
      *
      */
-    public function test_name_return_expected_Name(): void
+    public function test_name_returns_expected_Name(): void
     {
         $this->assertEquals(
             $this->expectedName(),
