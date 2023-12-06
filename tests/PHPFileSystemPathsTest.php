@@ -2,10 +2,14 @@
 
 namespace Darling\PHPFileSystemPaths\tests;
 
-use PHPUnit\Framework\TestCase;
-use Darling\PHPUnitTestUtilities\traits\PHPUnitConfigurationTests;
-use Darling\PHPUnitTestUtilities\traits\PHPUnitTestMessages;
-use Darling\PHPUnitTestUtilities\traits\PHPUnitRandomValues;
+use \Darling\PHPUnitTestUtilities\traits\PHPUnitConfigurationTests;
+use \Darling\PHPUnitTestUtilities\traits\PHPUnitRandomValues;
+use \Darling\PHPUnitTestUtilities\traits\PHPUnitTestMessages;
+use \PHPUnit\Framework\TestCase;
+use \Darling\PHPTextTypes\classes\collections\SafeTextCollection;
+use \Darling\PHPTextTypes\classes\strings\Name;
+use \Darling\PHPTextTypes\classes\strings\SafeText;
+use \Darling\PHPTextTypes\classes\strings\Text;
 
 /**
  * Defines common methods that may be useful to all
@@ -37,5 +41,49 @@ class PHPFileSystemPathsTest extends TestCase
     {
         $limits = [1, rand(0, 50000), 0];
         return $limits[array_rand($limits)];
+    }
+
+
+    /**
+     * Return a SafeTextCollection that maps to a directory that
+     * does not exist.
+     *
+     * @return SafeTextCollection
+     *
+     */
+    public function safeTextCollectionThatMapsToADirectoryThatDoesNotExist(): SafeTextCollection
+    {
+        return new SafeTextCollection(
+            new SafeText(new Name(new Text($this->randomChars()))),
+            new SafeText(new Name(new Text($this->randomChars()))),
+            new SafeText(new Name(new Text($this->randomChars()))),
+        );
+    }
+
+    /**
+     * Return a SafeTextCollection that maps to a directory that
+     * does exist.
+     *
+     * @return SafeTextCollection
+     *
+     */
+    public function safeTextCollectionThatMapsToADirectoryThatDoesExist(): SafeTextCollection
+    {
+        $currentDirectoryPathParts = explode(
+            DIRECTORY_SEPARATOR,
+            __DIR__
+        );
+        $safeTextPartsToExistingDirectoryPath = [];
+        foreach($currentDirectoryPathParts as $pathPart) {
+            if(!empty($pathPart)) {
+                $safeTextPartsToExistingDirectoryPath[] =
+                    new SafeText(
+                        new Name(new Text($pathPart))
+                    );
+            }
+        }
+        return new SafeTextCollection(
+            ...$safeTextPartsToExistingDirectoryPath
+        );
     }
 }
