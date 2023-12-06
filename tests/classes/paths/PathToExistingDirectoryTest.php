@@ -25,7 +25,7 @@ class PathToExistingDirectoryTest extends PHPFileSystemPathsTest
         $safeTextCollectionForPathThatDoesNotExist =
             $this->safeTextCollectionThatMapsToADirectoryThatDoesNotExist();
         $safeTextColletionForPathThatDoesExist =
-            $this->safeTextCollectionThatMapsToADirectoryThatDoesExist();
+            $this->safeTextCollectionThatMapsToThePHPFileSystemPathsLibrarysTestsDirectory();
         $testSafeTextCollection = (
             rand(0, 1)
             ? $safeTextCollectionForPathThatDoesNotExist

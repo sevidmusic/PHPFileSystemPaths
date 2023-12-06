@@ -200,27 +200,6 @@ trait PathToExistingDirectoryTestTrait
     }
 
     /**
-     * Return a SafeTextCollection that maps to the `/tmp` directory.
-     *
-     * @return SafeTextCollection
-     *
-     */
-    private function safeTextCollectionForPathToTmpDirectory(): SafeTextCollection
-    {
-        return new SafeTextCollectionInstance(
-            new SafeText(
-                new Text(
-                    str_replace(
-                        DIRECTORY_SEPARATOR,
-                        '',
-                        sys_get_temp_dir()
-                    )
-                )
-            )
-        );
-    }
-
-    /**
      * Return the SafeTextCollection that is expected to be
      * returned by the PathToExisitingDirectory being tested's
      * safeTextCollection() method.

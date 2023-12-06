@@ -4,7 +4,11 @@ namespace Darling\PHPFileSystemPaths\tests\interfaces\paths;
 
 use \Darling\PHPFileSystemPaths\interfaces\paths\PathToExistingFile;
 use \Darling\PHPFileSystemPaths\interfaces\paths\PathToExistingDirectory;
+use \Darling\PHPFileSystemPaths\classes\paths\PathToExistingDirectory as PathToExistingDirectoryInstance;
 use \Darling\PHPTextTypes\interfaces\strings\Name;
+use \Darling\PHPTextTypes\classes\strings\Text;
+use \Darling\PHPTextTypes\classes\strings\Name as NameInstance;
+use \Darling\PHPTextTypes\interfaces\collections\SafeTextCollection;
 
 /**
  * The PathToExistingFileTestTrait defines common tests for
@@ -125,6 +129,17 @@ trait PathToExistingFileTestTrait
         Name $name,
     ): void
     {
+        if(!file_exists($pathToExistingDirectory . DIRECTORY_SEPARATOR . $name)) {
+            $pathToExistingDirectory = new PathToExistingDirectoryInstance(
+                $this->safeTextCollectionForPathToTmpDirectory()
+            );
+            $name = new NameInstance(new Text('PHPFileSystemPathsEmptyTmpFile'));
+            $pathToTmpFile = $pathToExistingDirectory .
+                DIRECTORY_SEPARATOR .
+                $name->__toString();
+            // Create tmp file every time to make sure it is always empty
+            file_put_contents($pathToTmpFile, '', flags: LOCK_EX);
+        }
         $this->setExpectedPathToExistingDirectory($pathToExistingDirectory);
         $this->setExpectedName($name);
     }
@@ -244,6 +259,7 @@ trait PathToExistingFileTestTrait
     abstract protected function testFailedMessage(object $testedInstance, string $testedMethod, string $expectation): string;
     abstract public static function assertEquals(mixed $expected, mixed $actual, string $message = ''): void;
     abstract public static function assertTrue(mixed $condition, string $message = ''): void;
+    abstract public function safeTextCollectionForPathToTmpDirectory(): SafeTextCollection;
 
 }
 

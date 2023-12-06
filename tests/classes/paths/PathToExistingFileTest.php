@@ -26,15 +26,23 @@ class PathToExistingFileTest extends PHPFileSystemPathsTest
     public function setUp(): void
     {
         $pathToExistingDirectory = new PathToExistingDirectory(
-            $this->safeTextCollectionThatMapsToADirectoryThatDoesExist()
+            $this->safeTextCollectionThatMapsToThePHPFileSystemPathsLibrarysTestsDirectory()
         );
-        $name = new Name(new Text($this->randomChars()));
+        $nameOfFileThatExistsInThePHPFileSystemPathsTestsDirectory =
+            $this->nameOfFileThatExistsInPHPFileSystemPathsTestsDirectory();
+        $nameOfFileThatDoesNotExistInThePHPFileSystemPathsTestsDirectory =
+            new Name(new Text($this->randomChars()));
+        $testFileName = (
+            rand(0, 1)
+            ? $nameOfFileThatExistsInThePHPFileSystemPathsTestsDirectory
+            : $nameOfFileThatDoesNotExistInThePHPFileSystemPathsTestsDirectory
+        );
         $this->setExpectedPathAndFileName(
             $pathToExistingDirectory,
-            $name
+            $testFileName,
         );
         $this->setPathToExistingFileTestInstance(
-            new PathToExistingFile($pathToExistingDirectory, $name)
+            new PathToExistingFile($pathToExistingDirectory, $testFileName)
         );
     }
 }

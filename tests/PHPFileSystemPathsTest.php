@@ -67,7 +67,7 @@ class PHPFileSystemPathsTest extends TestCase
      * @return SafeTextCollection
      *
      */
-    public function safeTextCollectionThatMapsToADirectoryThatDoesExist(): SafeTextCollection
+    public function safeTextCollectionThatMapsToThePHPFileSystemPathsLibrarysTestsDirectory(): SafeTextCollection
     {
         $currentDirectoryPathParts = explode(
             DIRECTORY_SEPARATOR,
@@ -86,4 +86,31 @@ class PHPFileSystemPathsTest extends TestCase
             ...$safeTextPartsToExistingDirectoryPath
         );
     }
+
+    public function nameOfFileThatExistsInPHPFileSystemPathsTestsDirectory(): Name
+    {
+        return new Name(new Text(basename(__FILE__)));
+    }
+
+    /**
+     * Return a SafeTextCollection that maps to the `/tmp` directory.
+     *
+     * @return SafeTextCollection
+     *
+     */
+    public function safeTextCollectionForPathToTmpDirectory(): SafeTextCollection
+    {
+        return new SafeTextCollection(
+            new SafeText(
+                new Text(
+                    str_replace(
+                        DIRECTORY_SEPARATOR,
+                        '',
+                        sys_get_temp_dir()
+                    )
+                )
+            )
+        );
+    }
+
 }
