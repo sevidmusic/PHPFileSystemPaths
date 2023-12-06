@@ -98,6 +98,37 @@ trait PathToExistingFileTestTrait
         $this->pathToExistingFile = $pathToExistingFileTestInstance;
     }
 
+    /*
+     * Set the PathToExistingDirectory that is expected to
+     * be returned by the PathToExistingFile being tested's
+     * pathToExistingDirectory() method, as also set the
+     * the Name that is expected to be returned by the
+     * PathToExistingFile being tested's name() method.
+     *
+     * @param PathToExistingDirectory $pathToExistingDirectory
+     *                                    the PathToExistingDirectory
+     *                                    that is expected to be
+     *                                    returned by the
+     *                                    PathToExistingFile being
+     *                                    tested's
+     *                                    pathToExistingDirectory()
+     *                                    method.
+     * @param Name $name The the Name that is expected to be returned
+     *                   by the PathToExistingFile being tested's
+     *                   name() method.
+     *
+     * @return void
+     *
+     */
+    protected function setExpectedPathAndFileName(
+        PathToExistingDirectory $pathToExistingDirectory,
+        Name $name,
+    ): void
+    {
+        $this->setExpectedPathToExistingDirectory($pathToExistingDirectory);
+        $this->setExpectedName($name);
+    }
+
     /**
      * Set the PathToExistingDirectory that is expected to be
      * returned by the PathToExistingFile. being tested's

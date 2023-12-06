@@ -29,8 +29,10 @@ class PathToExistingFileTest extends PHPFileSystemPathsTest
             $this->safeTextCollectionThatMapsToADirectoryThatDoesExist()
         );
         $name = new Name(new Text($this->randomChars()));
-        $this->setExpectedPathToExistingDirectory($pathToExistingDirectory);
-        $this->setExpectedName($name);
+        $this->setExpectedPathAndFileName(
+            $pathToExistingDirectory,
+            $name
+        );
         $this->setPathToExistingFileTestInstance(
             new PathToExistingFile($pathToExistingDirectory, $name)
         );
