@@ -153,24 +153,33 @@ trait PathToExistingFileTestTrait
         Name $name,
     ): void
     {
-        if(!file_exists($pathToExistingDirectory . DIRECTORY_SEPARATOR . $name)) {
-            $pathToExistingDirectory = new PathToExistingDirectoryInstance(
-                $this->safeTextCollectionForPathToTmpDirectory()
+        if(
+            !file_exists(
+                $pathToExistingDirectory . DIRECTORY_SEPARATOR . $name
+            )
+        ) {
+            $pathToExistingDirectory =
+                new PathToExistingDirectoryInstance(
+                    $this->safeTextCollectionForPathToTmpDirectory()
+                );
+            $name = new NameInstance(
+                new Text('PHPFileSystemPathsEmptyTmpFile')
             );
-            $name = new NameInstance(new Text('PHPFileSystemPathsEmptyTmpFile'));
             $pathToTmpFile = $pathToExistingDirectory .
                 DIRECTORY_SEPARATOR .
                 $name->__toString();
-            // Create tmp file every time to make sure it is always empty
+            // Create tmp file every time to ensure it is always empty
             file_put_contents($pathToTmpFile, '', flags: LOCK_EX);
         }
-        $this->setExpectedPathToExistingDirectory($pathToExistingDirectory);
+        $this->setExpectedPathToExistingDirectory(
+            $pathToExistingDirectory
+        );
         $this->setExpectedName($name);
     }
 
     /**
      * Set the PathToExistingDirectory that is expected to be
-     * returned by the PathToExistingFile. being tested's
+     * returned by the PathToExistingFile being tested's
      * pathToExistingDirectory() method.
      *
      * @param PathToExistingDirectory  $pathToExistingDirectory
@@ -185,14 +194,17 @@ trait PathToExistingFileTestTrait
      * @return void
      *
      */
-    protected function setExpectedPathToExistingDirectory(PathToExistingDirectory $pathToExistingDirectory): void
+    protected function setExpectedPathToExistingDirectory(
+        PathToExistingDirectory $pathToExistingDirectory
+    ): void
     {
-        $this->expectedPathToExistingDirectory = $pathToExistingDirectory;
+        $this->expectedPathToExistingDirectory =
+            $pathToExistingDirectory;
     }
 
     /**
      * Return the PathToExistingDirectory that is expected to be
-     * returned by the PathToExistingFile. being tested's
+     * returned by the PathToExistingFile being tested's
      * pathToExistingDirectory() method.
      *
      * @return PathToExistingDirectory
@@ -204,18 +216,12 @@ trait PathToExistingFileTestTrait
     }
 
     /**
-     * Set the Name that is expected to be
-     * returned by the PathToExistingFile. being tested's
-     * name() method.
+     * Set the Name that is expected to be returned by the
+     * PathToExistingFile being tested's name() method.
      *
-     * @param Name  $name
-     *                                     The Name
-     *                                     that is expected to be
-     *                                     returned by the
-     *                                     PathToExistingFile being
-     *                                     tested's
-     *                                     name()
-     *                                     method.
+     * @param Name  $name The Name that is expected to be returned by
+     *                    the PathToExistingFile being tested's name()
+     *                    method.
      *
      * @return void
      *
@@ -226,9 +232,8 @@ trait PathToExistingFileTestTrait
     }
 
     /**
-     * Return the Name that is expected to be
-     * returned by the PathToExistingFile. being tested's
-     * name() method.
+     * Return the Name that is expected to be returned by the
+     * PathToExistingFile being tested's name() method.
      *
      * @return Name
      *
@@ -250,7 +255,8 @@ trait PathToExistingFileTestTrait
     {
         $this->assertEquals(
             $this->expectedPathToExistingDirectory(),
-            $this->pathToExistingFileTestInstance()->pathToExistingDirectory(),
+            $this->pathToExistingFileTestInstance()
+                 ->pathToExistingDirectory(),
             $this->testFailedMessage(
                 $this->pathToExistingFileTestInstance(),
                 'pathToExistingDirectory',
@@ -291,7 +297,10 @@ trait PathToExistingFileTestTrait
     public function test___toString_returns_the_expected_string(): void
     {
         $this->assertEquals(
-            $this->expectedPathToExistingDirectory()->__toString() . DIRECTORY_SEPARATOR . $this->expectedName()->__toString(),
+            $this->expectedPathToExistingDirectory()
+                 ->__toString() .
+            DIRECTORY_SEPARATOR .
+            $this->expectedName()->__toString(),
             $this->pathToExistingFileTestInstance()->__toString(),
             $this->testFailedMessage(
                 $this->pathToExistingFileTestInstance(),
@@ -312,7 +321,9 @@ trait PathToExistingFileTestTrait
     public function test___toString_returns_a_path_to_an_existing_file(): void
     {
         $this->assertTrue(
-            file_exists($this->pathToExistingFileTestInstance()->__toString()),
+            file_exists(
+                $this->pathToExistingFileTestInstance()->__toString()
+            ),
             $this->testFailedMessage(
                 $this->pathToExistingFileTestInstance(),
                 '__toString',
@@ -320,6 +331,7 @@ trait PathToExistingFileTestTrait
             ),
         );
     }
+
     abstract protected function testFailedMessage(object $testedInstance, string $testedMethod, string $expectation): string;
     abstract public function safeTextCollectionForPathToTmpDirectory(): SafeTextCollection;
     abstract public static function assertEquals(mixed $expected, mixed $actual, string $message = ''): void;
