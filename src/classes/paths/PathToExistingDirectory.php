@@ -2,15 +2,14 @@
 
 namespace Darling\PHPFileSystemPaths\classes\paths;
 
-use Darling\PHPTextTypes\interfaces\collections\SafeTextCollection;
 use \Darling\PHPFileSystemPaths\interfaces\paths\PathToExistingDirectory as PathToExistingDirectoryInterface;
 use \Darling\PHPTextTypes\classes\collections\SafeTextCollection as SafeTextCollectionInstance;
 use \Darling\PHPTextTypes\classes\strings\SafeText;
 use \Darling\PHPTextTypes\classes\strings\Text;
+use \Darling\PHPTextTypes\interfaces\collections\SafeTextCollection;
 
 class PathToExistingDirectory implements PathToExistingDirectoryInterface
 {
-
 
     /**
      * Instantiate a new PathToExistingDirectory.
@@ -22,12 +21,15 @@ class PathToExistingDirectory implements PathToExistingDirectoryInterface
      *
      *                               Note: If the specified
      *                               SafeTextCollection does
-     *                               not map to a existing
-     *                               directory then the
-     *                               path returned by the
-     *                               __toString() method will
-     *                               be the path to the systems
-     *                               temporary directory.
+     *                               not map to an existing
+     *                               directory then a
+     *                               SafeTextCollection will
+     *                               be instantiated internally
+     *                               that will map to the systems
+     *                               temporary directory to make
+     *                               sure the path returned by the
+     *                               __toString() method is a path
+     *                               an existing directory.
      *
      *                               The temporary directory
      *                               path will be determined
@@ -50,11 +52,29 @@ class PathToExistingDirectory implements PathToExistingDirectoryInterface
         }
     }
 
+    public function __toString(): string
+    {
+        return $this->derivePathFromSafeTextCollection(
+            $this->safeTextCollection()
+        );
+    }
+
     public function safeTextCollection(): SafeTextCollection
     {
         return $this->safeTextCollection;
     }
 
+    /**
+     * Determine if the specified SafeTextCollection maps to an
+     * existing path.
+     *
+     * @param SafeTextCollection $safeTextCollection
+     *                               The SafeTextCollection
+     *                               to check.
+     *
+     * @return bool
+     *
+     */
     private function safeTextCollectionMapsToAnExistingPath(
         SafeTextCollection $safeTextCollection
     ): bool
@@ -66,6 +86,17 @@ class PathToExistingDirectory implements PathToExistingDirectoryInterface
         );
     }
 
+    /**
+     * Derive a path from a SafeTextCollection.
+     *
+     * @param SafeTextCollection $safeTextCollection
+     *                               The SafeTextCollection
+     *                               to derive a path from.
+     *
+     *
+     * @return string
+     *
+     */
     private function derivePathFromSafeTextCollection(
         SafeTextCollection $safeTextCollection
     ): string
@@ -78,6 +109,13 @@ class PathToExistingDirectory implements PathToExistingDirectoryInterface
         return $pathDerivedFromSafeTextCollection;
     }
 
+    /**
+     * Return a SafeTextCollection that maps to thhe systems
+     * temporary directory.
+     *
+     * @return SafeTextCollection
+     *
+     */
     private function safeTextCollectionForPathToTmpDirectory(): SafeTextCollection
     {
         return new SafeTextCollectionInstance(
@@ -90,13 +128,6 @@ class PathToExistingDirectory implements PathToExistingDirectoryInterface
                     )
                 )
             )
-        );
-    }
-
-    public function __toString(): string
-    {
-        return $this->derivePathFromSafeTextCollection(
-            $this->safeTextCollection()
         );
     }
 

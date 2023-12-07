@@ -3,9 +3,6 @@
 namespace Darling\PHPFileSystemPaths\tests\interfaces\paths;
 
 use \Darling\PHPFileSystemPaths\interfaces\paths\PathToExistingDirectory;
-use \Darling\PHPTextTypes\classes\collections\SafeTextCollection as SafeTextCollectionInstance;
-use \Darling\PHPTextTypes\classes\strings\SafeText;
-use \Darling\PHPTextTypes\classes\strings\Text;
 use \Darling\PHPTextTypes\interfaces\collections\SafeTextCollection;
 
 /**
@@ -126,7 +123,8 @@ trait PathToExistingDirectoryTestTrait
         PathToExistingDirectory $pathToExistingDirectoryTestInstance
     ): void
     {
-        $this->pathToExistingDirectory = $pathToExistingDirectoryTestInstance;
+        $this->pathToExistingDirectory =
+            $pathToExistingDirectoryTestInstance;
     }
 
     /**
@@ -149,7 +147,9 @@ trait PathToExistingDirectoryTestTrait
     ): void
     {
         $this->expectedSafeTextCollection = match(
-            $this->safeTextCollectionMapsToAnExistingPath($safeTextCollection)
+            $this->safeTextCollectionMapsToAnExistingPath(
+                $safeTextCollection
+            )
         ) {
             true =>  $safeTextCollection,
             false => $this->safeTextCollectionForPathToTmpDirectory(),
@@ -200,27 +200,6 @@ trait PathToExistingDirectoryTestTrait
     }
 
     /**
-     * Return a SafeTextCollection that maps to the `/tmp` directory.
-     *
-     * @return SafeTextCollection
-     *
-     */
-    private function safeTextCollectionForPathToTmpDirectory(): SafeTextCollection
-    {
-        return new SafeTextCollectionInstance(
-            new SafeText(
-                new Text(
-                    str_replace(
-                        DIRECTORY_SEPARATOR,
-                        '',
-                        sys_get_temp_dir()
-                    )
-                )
-            )
-        );
-    }
-
-    /**
      * Return the SafeTextCollection that is expected to be
      * returned by the PathToExisitingDirectory being tested's
      * safeTextCollection() method.
@@ -246,7 +225,8 @@ trait PathToExistingDirectoryTestTrait
     {
         $this->assertEquals(
             $this->expectedSafeTextCollection(),
-            $this->pathToExistingDirectoryTestInstance()->safeTextCollection(),
+            $this->pathToExistingDirectoryTestInstance()
+                 ->safeTextCollection(),
             $this->testFailedMessage(
                 $this->pathToExistingDirectoryTestInstance(),
                 'safeTextCollection',
@@ -256,7 +236,8 @@ trait PathToExistingDirectoryTestTrait
     }
 
     /**
-     * test___toString_returns_a_path_derived_from_the_expected_SafeTextCollection
+     * Test __toString() returns a path derived from the expected
+     * SafeTextCollection.
      *
      * @return void
      *
@@ -266,12 +247,15 @@ trait PathToExistingDirectoryTestTrait
     public function test___toString_returns_a_path_derived_from_the_expected_SafeTextCollection(): void
     {
         $this->assertEquals(
-            $this->derivePathFromSafeTextCollection($this->expectedSafeTextCollection()),
+            $this->derivePathFromSafeTextCollection(
+                $this->expectedSafeTextCollection()
+            ),
             $this->pathToExistingDirectoryTestInstance()->__toString(),
             $this->testFailedMessage(
                 $this->pathToExistingDirectoryTestInstance(),
                 '__toString',
-                'return the path derived from the expected SafeTextCollection'
+                'return the path derived from the expected ' .
+                'SafeTextCollection'
             ),
         );
     }
@@ -286,7 +270,10 @@ trait PathToExistingDirectoryTestTrait
     public function test___toString_returns_a_path_to_an_existing_directory(): void
     {
         $this->assertTrue(
-            is_dir($this->pathToExistingDirectoryTestInstance()->__toString()),
+            is_dir(
+                $this->pathToExistingDirectoryTestInstance()
+                     ->__toString()
+            ),
             $this->testFailedMessage(
                 $this->pathToExistingDirectoryTestInstance(),
                 '__toString',
@@ -296,6 +283,7 @@ trait PathToExistingDirectoryTestTrait
     }
 
     abstract protected function testFailedMessage(object $testedInstance, string $testedMethod, string $expectation): string;
+    abstract public function safeTextCollectionForPathToTmpDirectory(): SafeTextCollection;
     abstract public static function assertEquals(mixed $expected, mixed $actual, string $message = ''): void;
     abstract public static function assertTrue(mixed $condition, string $message = ''): void;
 
