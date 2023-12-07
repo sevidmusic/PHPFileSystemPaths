@@ -2,7 +2,7 @@
 
 namespace Darling\PHPFileSystemPaths\interfaces\paths;
 
-use Darling\PHPTextTypes\interfaces\collections\SafeTextCollection;
+use \Darling\PHPTextTypes\interfaces\collections\SafeTextCollection;
 use \Stringable;
 
 /**
@@ -18,20 +18,15 @@ use \Stringable;
  *
  * However, if the assigned SafeTextCollection cannot be mapped to an
  * existing directory then the __toString() method will return the
- * result of sys_get_temp_dir().
+ * path returned by php's sys_get_temp_dir() function.
  *
- * @example
- *
- * ```
- *
- * ```
  */
 interface PathToExistingDirectory extends Stringable
 {
 
     /**
      * Return the SafeTextCollection that defines the parts of this
-     * PathToAnExistingDirectory.
+     * PathToExistingDirectory.
      *
      * @return SafeTextCollection
      *
@@ -40,9 +35,7 @@ interface PathToExistingDirectory extends Stringable
 
 
     /**
-     * Return the path to the existing directory as a string.
-     * This path will be derived from SafeTextCollection assigned
-     * to the PathToExisitingDirectory.
+     * Return the path to the existing directory.
      *
      * @return string
      *

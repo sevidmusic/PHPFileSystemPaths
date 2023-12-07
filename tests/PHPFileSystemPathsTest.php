@@ -2,14 +2,14 @@
 
 namespace Darling\PHPFileSystemPaths\tests;
 
-use \Darling\PHPUnitTestUtilities\traits\PHPUnitConfigurationTests;
-use \Darling\PHPUnitTestUtilities\traits\PHPUnitRandomValues;
-use \Darling\PHPUnitTestUtilities\traits\PHPUnitTestMessages;
-use \PHPUnit\Framework\TestCase;
 use \Darling\PHPTextTypes\classes\collections\SafeTextCollection;
 use \Darling\PHPTextTypes\classes\strings\Name;
 use \Darling\PHPTextTypes\classes\strings\SafeText;
 use \Darling\PHPTextTypes\classes\strings\Text;
+use \Darling\PHPUnitTestUtilities\traits\PHPUnitConfigurationTests;
+use \Darling\PHPUnitTestUtilities\traits\PHPUnitRandomValues;
+use \Darling\PHPUnitTestUtilities\traits\PHPUnitTestMessages;
+use \PHPUnit\Framework\TestCase;
 
 /**
  * Defines common methods that may be useful to all
@@ -87,13 +87,21 @@ class PHPFileSystemPathsTest extends TestCase
         );
     }
 
+    /**
+     * Return the name of a file that exists in the PHPFileSystemPaths
+     * library's tests directory.
+     *
+     * @return Name
+     *
+     */
     public function nameOfFileThatExistsInPHPFileSystemPathsTestsDirectory(): Name
     {
         return new Name(new Text(basename(__FILE__)));
     }
 
     /**
-     * Return a SafeTextCollection that maps to the `/tmp` directory.
+     * Return a SafeTextCollection that maps to the systems temporary
+     * directory.
      *
      * @return SafeTextCollection
      *

@@ -10,8 +10,8 @@ class PathToExistingDirectoryTest extends PHPFileSystemPathsTest
 {
 
     /**
-     * The PathToExistingDirectoryTestTrait defines
-     * common tests for implementations of the
+     * The PathToExistingDirectoryTestTrait defines common tests for
+     * implementations of the
      * Darling\PHPFileSystemPaths\interfaces\paths\PathToExistingDirectory
      * interface.
      *

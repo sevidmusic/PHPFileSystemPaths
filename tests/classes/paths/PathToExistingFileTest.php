@@ -2,10 +2,10 @@
 
 namespace Darling\PHPFileSystemPaths\tests\classes\paths;
 
+use \Darling\PHPFileSystemPaths\classes\paths\PathToExistingDirectory;
 use \Darling\PHPFileSystemPaths\classes\paths\PathToExistingFile;
 use \Darling\PHPFileSystemPaths\tests\PHPFileSystemPathsTest;
 use \Darling\PHPFileSystemPaths\tests\interfaces\paths\PathToExistingFileTestTrait;
-use \Darling\PHPFileSystemPaths\classes\paths\PathToExistingDirectory;
 use \Darling\PHPTextTypes\classes\strings\Name;
 use \Darling\PHPTextTypes\classes\strings\Text;
 
@@ -13,8 +13,8 @@ class PathToExistingFileTest extends PHPFileSystemPathsTest
 {
 
     /**
-     * The PathToExistingFileTestTrait defines
-     * common tests for implementations of the
+     * The PathToExistingFileTestTrait defines common tests for
+     * implementations of the
      * Darling\PHPFileSystemPaths\interfaces\paths\PathToExistingFile
      * interface.
      *

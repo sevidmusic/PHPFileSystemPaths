@@ -4,8 +4,6 @@ namespace Darling\PHPFileSystemPaths\tests\interfaces\paths;
 
 use \Darling\PHPFileSystemPaths\interfaces\paths\PathToExistingDirectory;
 use \Darling\PHPTextTypes\classes\collections\SafeTextCollection as SafeTextCollectionInstance;
-use \Darling\PHPTextTypes\classes\strings\SafeText;
-use \Darling\PHPTextTypes\classes\strings\Text;
 use \Darling\PHPTextTypes\interfaces\collections\SafeTextCollection;
 
 /**
@@ -235,7 +233,8 @@ trait PathToExistingDirectoryTestTrait
     }
 
     /**
-     * test___toString_returns_a_path_derived_from_the_expected_SafeTextCollection
+     * Test __toString() returns a path derived from the expected
+     * SafeTextCollection.
      *
      * @return void
      *

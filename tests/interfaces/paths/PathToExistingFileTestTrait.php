@@ -2,13 +2,13 @@
 
 namespace Darling\PHPFileSystemPaths\tests\interfaces\paths;
 
-use \Darling\PHPFileSystemPaths\interfaces\paths\PathToExistingFile;
-use \Darling\PHPFileSystemPaths\interfaces\paths\PathToExistingDirectory;
 use \Darling\PHPFileSystemPaths\classes\paths\PathToExistingDirectory as PathToExistingDirectoryInstance;
-use \Darling\PHPTextTypes\interfaces\strings\Name;
-use \Darling\PHPTextTypes\classes\strings\Text;
+use \Darling\PHPFileSystemPaths\interfaces\paths\PathToExistingDirectory;
+use \Darling\PHPFileSystemPaths\interfaces\paths\PathToExistingFile;
 use \Darling\PHPTextTypes\classes\strings\Name as NameInstance;
+use \Darling\PHPTextTypes\classes\strings\Text;
 use \Darling\PHPTextTypes\interfaces\collections\SafeTextCollection;
+use \Darling\PHPTextTypes\interfaces\strings\Name;
 
 /**
  * The PathToExistingFileTestTrait defines common tests for
@@ -47,10 +47,17 @@ trait PathToExistingFileTestTrait
     private Name $expectedName;
 
     /**
-     * Set up an instance of a PathToExistingFile implementation to test.
+     * Set up an instance of a PathToExistingFile implementation to
+     * test.
      *
-     * This method must also set the PathToExistingFile implementation instance
-     * to be tested via the setPathToExistingFileTestInstance() method.
+     * This method must set the PathToExistingFile
+     * implementation instance to be tested via the
+     * setPathToExistingFileTestInstance() method.
+     *
+     * This method must also set the PathToExistingDirectory and Name
+     * that are expected to be returned by the PathToExistingFile
+     * being tested's pathToExistingDirectory() and name() methods,
+     * respectively, via the setExpectedPathAndFileName() method.
      *
      * This method may also be used to perform any additional setup
      * required by the implementation being tested.
@@ -60,10 +67,26 @@ trait PathToExistingFileTestTrait
      * @example
      *
      * ```
-     * protected function setUp(): void
+     * public function setUp(): void
      * {
+     *     $pathToExistingDirectory = new PathToExistingDirectory(
+     *         $this->safeTextCollectionThatMapsToThePHPFileSystemPathsLibrarysTestsDirectory()
+     *     );
+     *     $nameOfFileThatExistsInThePHPFileSystemPathsTestsDirectory =
+     *         $this->nameOfFileThatExistsInPHPFileSystemPathsTestsDirectory();
+     *     $nameOfFileThatDoesNotExistInThePHPFileSystemPathsTestsDirectory =
+     *         new Name(new Text($this->randomChars()));
+     *     $testFileName = (
+     *         rand(0, 1)
+     *         ? $nameOfFileThatExistsInThePHPFileSystemPathsTestsDirectory
+     *         : $nameOfFileThatDoesNotExistInThePHPFileSystemPathsTestsDirectory
+     *     );
+     *     $this->setExpectedPathAndFileName(
+     *         $pathToExistingDirectory,
+     *         $testFileName,
+     *     );
      *     $this->setPathToExistingFileTestInstance(
-     *         new \Darling\PHPFileSystemPaths\classes\paths\PathToExistingFile()
+     *         new PathToExistingFile($pathToExistingDirectory, $testFileName)
      *     );
      * }
      *
@@ -117,6 +140,7 @@ trait PathToExistingFileTestTrait
      *                                    tested's
      *                                    pathToExistingDirectory()
      *                                    method.
+     *
      * @param Name $name The the Name that is expected to be returned
      *                   by the PathToExistingFile being tested's
      *                   name() method.
@@ -277,10 +301,29 @@ trait PathToExistingFileTestTrait
         );
     }
 
+    /**
+     * Test __toString() returns a path to an existing file.
+     *
+     * @return void
+     *
+     * @covers PathToExisitngFile->__toString()
+     *
+     */
+    public function test___toString_returns_a_path_to_an_existing_file(): void
+    {
+        $this->assertTrue(
+            file_exists($this->pathToExistingFileTestInstance()->__toString()),
+            $this->testFailedMessage(
+                $this->pathToExistingFileTestInstance(),
+                '__toString',
+                'return a path to an existing file.'
+            ),
+        );
+    }
     abstract protected function testFailedMessage(object $testedInstance, string $testedMethod, string $expectation): string;
+    abstract public function safeTextCollectionForPathToTmpDirectory(): SafeTextCollection;
     abstract public static function assertEquals(mixed $expected, mixed $actual, string $message = ''): void;
     abstract public static function assertTrue(mixed $condition, string $message = ''): void;
-    abstract public function safeTextCollectionForPathToTmpDirectory(): SafeTextCollection;
 
 }
 
